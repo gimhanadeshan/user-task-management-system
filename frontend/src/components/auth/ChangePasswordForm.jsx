@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../hooks/useAuth";
+import { showToast } from "../../utils/toast";
 
 const ChangePasswordForm = () => {
   const { changePassword, isLoading, error } = useAuth();
@@ -24,10 +25,11 @@ const ChangePasswordForm = () => {
         onSubmit={async (values, { resetForm }) => {
           try {
             await changePassword(values.currentPassword, values.newPassword);
-            alert("Password changed successfully");
+            showToast("Password changed successfully", "success");
             resetForm();
           } catch (err) {
             console.error(err);
+            showToast(err.message || "Failed to change password", "error");
           }
         }}
       >

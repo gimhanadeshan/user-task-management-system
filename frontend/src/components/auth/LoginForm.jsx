@@ -16,8 +16,10 @@ const LoginForm = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      await login(values);
-      showToast("Login successful!", "success");
+      const success = await login(values);
+      if (success) {
+        showToast("Login successful!", "success");
+      }
     } catch (err) {
       console.error("Login error:", err);
     } finally {
@@ -33,12 +35,6 @@ const LoginForm = () => {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-6">
-          {error && (
-            <div className="p-4 bg-red-50 border-l-4 border-red-400 rounded-lg">
-              <div className="text-sm text-red-800">{error}</div>
-            </div>
-          )}
-
           <div>
             <label
               htmlFor="username"

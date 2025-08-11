@@ -18,16 +18,24 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle response errors - logout on 401
+// Handle response errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      if (error.response.status === 401) {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-      } else if (error.response.status === 403) {
-        error.message = error.response.data?.message || "Access denied";
+      // Customize error messages based on status code
+      switch (error.response.status) {
+        case 401:
+          error.message = error.response.data?.message || "Unauthorized access";
+          break;
+        case 403:
+          error.message = error.response.data?.message || "Access denied";
+          break;
+        case 500:
+          error.message = error.response.data?.message || "Server error";
+          break;
+        default:
+          error.message = error.response.data?.message || "Request failed";
       }
     }
     return Promise.reject(error);

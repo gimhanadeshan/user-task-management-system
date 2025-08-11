@@ -9,11 +9,21 @@ export const register = async (userData) => {
     });
     return response.data;
   } catch (error) {
-    // Handle specific error messages
-    if (error.response?.data) {
-      throw new Error(error.response.data);
+    if (error.response) {
+      if (error.response.data.message) {
+        throw new Error(error.response.data.message);
+      }
+
+      if (typeof error.response.data === "string") {
+        throw new Error(error.response.data);
+      }
+
+      throw new Error(JSON.stringify(error.response.data));
+    } else if (error.request) {
+      throw new Error("No response from server. Please try again.");
+    } else {
+      throw new Error("Registration failed. Please try again.");
     }
-    throw new Error("Registration failed");
   }
 };
 
@@ -22,7 +32,7 @@ export const login = async (credentials) => {
     username: credentials.username,
     password: credentials.password,
   });
-  return response.data; // { token, user }
+  return response.data;
 };
 
 export const forgotPassword = async (email) => {

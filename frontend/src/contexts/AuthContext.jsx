@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         navigate("/dashboard");
         return true;
       } catch (err) {
-        setError(err.response?.data?.message || err.message || "Login failed");
+        setError(err.message || "Invalid username or password");
         return false;
       } finally {
         setIsLoading(false);

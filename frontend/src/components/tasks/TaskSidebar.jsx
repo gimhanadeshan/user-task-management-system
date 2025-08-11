@@ -22,9 +22,15 @@ const TaskSidebar = ({ isOpen, onClose, editingTask = null }) => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
+      // Create a new date object from the input value
+      const dueDate = new Date(values.dueDate);
+
+      // Ensure the timezone offset is preserved
       const taskData = {
         ...values,
-        dueDate: new Date(values.dueDate).toISOString(),
+        dueDate: new Date(
+          dueDate.getTime() - dueDate.getTimezoneOffset() * 60000
+        ).toISOString(),
       };
 
       if (isEditing) {

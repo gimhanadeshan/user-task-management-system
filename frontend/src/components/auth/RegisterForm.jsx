@@ -1,15 +1,34 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useEffect } from "react";
 import { registerSchema } from "../../utils/validators";
 import { useAuth } from "../../hooks/useAuth";
+import { showToast } from "../../utils/toast";
 
 const RegisterForm = () => {
   const { register, isLoading, error } = useAuth();
+
+  useEffect(() => {
+    if (error) {
+      showToast(error, "error");
+    }
+  }, [error]);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      await register(values);
+      showToast("Registration successful!", "success");
+    } catch (err) {
+      console.error("Registration error:", err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <Formik
       initialValues={{ username: "", email: "", password: "" }}
       validationSchema={registerSchema}
-      onSubmit={register}
+      onSubmit={handleSubmit}
     >
       <Form className="space-y-6">
         <div>
@@ -71,12 +90,6 @@ const RegisterForm = () => {
             className="mt-2 text-sm text-red-600"
           />
         </div>
-
-        {error && (
-          <div className="p-4 bg-red-50 border-l-4 border-red-400 rounded-lg">
-            <div className="text-sm text-red-800">{error}</div>
-          </div>
-        )}
 
         <button type="submit" disabled={isLoading} className="btn-primary">
           {isLoading ? "Creating Account..." : "Create Account"}

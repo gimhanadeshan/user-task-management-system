@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../hooks/useAuth";
+import { showToast } from "../../utils/toast";
 
 const ForgotPasswordForm = () => {
   const { forgotPassword, isLoading, error } = useAuth();
@@ -8,7 +9,7 @@ const ForgotPasswordForm = () => {
   const handleSubmit = async (values) => {
     const success = await forgotPassword(values.email);
     if (success) {
-      alert("Password reset link sent!");
+      showToast("Password reset link sent!", "success");
     }
   };
   return (

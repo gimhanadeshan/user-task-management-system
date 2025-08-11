@@ -4,6 +4,12 @@ import { useTasks } from "../../hooks/useTasks";
 import TaskItem from "./TaskItem";
 import TaskSidebar from "./TaskSidebar";
 import { isToday } from "../../utils/helpers";
+import {
+  ClipboardDocumentIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 
 const TaskList = () => {
   const { tasks, isLoading, error, fetchTasks } = useTasks();
@@ -126,7 +132,7 @@ const TaskList = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={handleNewTask}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors flex items-center space-x-2 cursor-pointer"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors flex items-center space-x-2 cursor-pointer text-sm"
             >
               <svg
                 className="w-5 h-5"
@@ -236,14 +242,16 @@ const TaskList = () => {
       {/* Tasks List */}
       {filteredAndSortedTasks.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl shadow-lg">
-          <div className="text-gray-400 text-6xl mb-4">
-            {filterBy === "all"
-              ? "📝"
-              : filterBy === "completed"
-                ? "✅"
-                : filterBy === "overdue"
-                  ? "⏰"
-                  : "🔍"}
+          <div className="text-gray-400 mb-4 flex justify-center">
+            {filterBy === "all" ? (
+              <ClipboardDocumentIcon className="w-12 h-12" />
+            ) : filterBy === "completed" ? (
+              <CheckCircleIcon className="w-12 h-12" />
+            ) : filterBy === "overdue" ? (
+              <ClockIcon className="w-12 h-12" />
+            ) : (
+              <MagnifyingGlassIcon className="w-12 h-12" />
+            )}
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             {filterBy === "all" ? "No tasks yet" : `No ${filterBy} tasks`}

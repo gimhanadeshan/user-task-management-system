@@ -3,14 +3,16 @@ import * as Yup from "yup";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../../utils/toast";
 
 const ResetPasswordForm = ({ token }) => {
   const { resetPassword, isLoading, error, setError } = useAuth();
   const navigate = useNavigate();
-
   useEffect(() => {
-    setError(null);
-  }, [setError]);
+    if (error) {
+      showToast(error, "error");
+    }
+  }, [error]);
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -23,7 +25,7 @@ const ResetPasswordForm = ({ token }) => {
 
       console.log("Success response:", response);
       navigate("/login");
-      alert("Password reset successfully!");
+      showToast("Password reset successfully!", "success");
       resetForm();
     } catch (err) {
       console.error("Detailed error:", {
@@ -94,12 +96,6 @@ const ResetPasswordForm = ({ token }) => {
               className="mt-2 text-sm text-red-600"
             />
           </div>
-
-          {error && (
-            <div className="p-4 bg-red-50 border-l-4 border-red-400 rounded-lg flex items-start">
-              <div className="text-sm text-red-800">{error}</div>
-            </div>
-          )}
 
           <button
             type="submit"

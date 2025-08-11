@@ -1,6 +1,7 @@
 import { useTasks } from "../../contexts/TaskContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { showToast } from "../../utils/toast";
 
 const TaskSidebar = ({ isOpen, onClose, editingTask = null }) => {
   const { addTask, updateTask, isLoading } = useTasks();
@@ -35,14 +36,20 @@ const TaskSidebar = ({ isOpen, onClose, editingTask = null }) => {
 
       if (isEditing) {
         await updateTask(editingTask.id, { ...editingTask, ...taskData });
+        showToast("Task updated successfully!", "success");
       } else {
         await addTask(taskData);
         resetForm();
+        showToast("Task added successfully!", "success");
       }
 
       onClose();
     } catch (error) {
       console.error(`Error ${isEditing ? "updating" : "adding"} task:`, error);
+      showToast(
+        `Failed to ${isEditing ? "update" : "add"} task. Please try again.`,
+        "error"
+      );
     }
   };
 

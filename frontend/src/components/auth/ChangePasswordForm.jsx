@@ -6,8 +6,8 @@ const ChangePasswordForm = () => {
   const { changePassword, isLoading, error } = useAuth();
 
   return (
-    <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8 text-sm">
-      <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+    <div className="max-w-xl mx-auto bg-white rounded-xl  p-8 text-sm">
+      <h3 className="text-xl font-semibold text-gray-900 mb-6">
         Change Password
       </h3>
 

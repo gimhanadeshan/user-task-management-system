@@ -2,17 +2,22 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginSchema } from "../../utils/validators";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
+import { showToast } from "../../utils/toast";
 
 const LoginForm = () => {
   const { login, isLoading, error, setError } = useAuth();
 
   useEffect(() => {
-    return () => setError(null);
-  }, [setError]);
+    if (error) {
+      showToast(error, "error");
+      setError(null);
+    }
+  }, [error, setError]);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await login(values);
+      showToast("Login successful!", "success");
     } catch (err) {
       console.error("Login error:", err);
     } finally {

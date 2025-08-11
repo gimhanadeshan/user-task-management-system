@@ -2,7 +2,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 import ChangePasswordForm from "../components/auth/ChangePasswordForm";
 import TaskList from "../components/tasks/TaskList";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"; // Updated import for v2
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"; 
 
 const DashboardPage = () => {
   const { user, logout } = useAuth();

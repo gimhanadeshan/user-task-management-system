@@ -2,6 +2,8 @@ package com.example.backend.service.impl;
 
 import com.example.backend.dto.request.*;
 import com.example.backend.entity.User;
+import com.example.backend.exception.EmailAlreadyExistsException;
+import com.example.backend.exception.InvalidCredentialsException;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.security.JwtUtil;
 import com.example.backend.service.MailService;
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerUser(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email is already in use");
+            throw new EmailAlreadyExistsException("Email is already in use");
         }
 
         User user = new User();
@@ -59,12 +61,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String authenticateUser(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         return jwtUtil.generateToken(userDetails);
     }

@@ -1,10 +1,11 @@
-package com.example.backend.service;
+package com.example.backend.service.impl;
 
 import com.example.backend.dto.request.TaskRequest;
 import com.example.backend.entity.Task;
 import com.example.backend.entity.User;
 import com.example.backend.exception.NotFoundException;
 import com.example.backend.repository.TaskRepository;
+import com.example.backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

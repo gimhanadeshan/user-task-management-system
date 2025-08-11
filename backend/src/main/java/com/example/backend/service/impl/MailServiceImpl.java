@@ -1,5 +1,6 @@
-package com.example.backend.service;
+package com.example.backend.service.impl;
 
+import com.example.backend.service.MailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;

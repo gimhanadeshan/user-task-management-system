@@ -1,9 +1,11 @@
-package com.example.backend.service;
+package com.example.backend.service.impl;
 
 import com.example.backend.dto.request.*;
 import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.security.JwtUtil;
+import com.example.backend.service.MailService;
+import com.example.backend.service.UserService;
 import jakarta.mail.MessagingException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

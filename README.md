@@ -6,6 +6,8 @@
 This is a **full-stack application** built with **React (Vite)** for the frontend and **Spring Boot** for the backend using **MySQL** for data storage.
 It allows users to register, log in, manage their profile, and create/manage a to-do list.
 
+<img width="1891" height="915" alt="Image" src="https://github.com/user-attachments/assets/63ae9912-6c89-4d6e-a686-e1f86ba28e3a" />
+
 ---
 
 ## 📌 Features
@@ -64,8 +66,8 @@ Make sure you have the following installed:
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone <your-repo-link>
-cd <project-folder>
+git clone https://github.com/gimhanadeshan/user-task-management-system.git
+cd user-task-management-system
 ```
 
 ---

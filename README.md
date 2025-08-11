@@ -36,7 +36,7 @@ It allows users to register, log in, manage their profile, and create/manage a t
 ## 🛠 Tech Stack
 
 * **Frontend:** React (Vite), Axios, Tailwind CSS / CSS Modules
-* **Backend:** Spring Boot, Spring Security, Spring Data JPA, JWT, Swagger
+* **Backend:** Spring Boot, Spring Security, Spring Data JPA, JWT, Swagger,Spring Mail
 * **Database:** MySQL
 
 ---

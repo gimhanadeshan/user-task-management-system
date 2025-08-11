@@ -8,6 +8,7 @@ const DashboardPage = () => {
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("tasks");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const userInitial = user?.username?.charAt(0)?.toUpperCase() || "U";
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -30,7 +31,7 @@ const DashboardPage = () => {
               </button>
               <div className="ml-4 md:ml-0">
                 <h1 className="text-xl md:text-2xl font-bold text-gray-900">
-                  To-Do 
+                  To-Do
                 </h1>
                 <p className="hidden md:block text-sm text-gray-600">
                   Stay organized, get things done
@@ -124,8 +125,40 @@ const DashboardPage = () => {
         {activeTab === "tasks" ? (
           <TaskList />
         ) : (
-          <div className="max-w-2xl mx-auto">
-            <ChangePasswordForm />
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* User Profile Sidebar */}
+            <div className="w-full md:w-1/3 lg:w-1/4">
+              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-28">
+                <div className="flex flex-col items-center">
+                  {/* User Avatar Circle */}
+                  <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-white text-3xl font-bold mb-4">
+                    {userInitial}
+                  </div>
+
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                    {user?.username}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">{user?.email}</p>
+
+                  <div className="w-full border-t border-gray-200 pt-4">
+                    <div className="text-sm space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Member since</span>
+                        <span className="text-gray-900">
+                          {new Date(user?.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      {/* Add more user stats here if needed */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full md:w-2/3 lg:w-3/4 space-y-6 ">
+              {/* Password Change Form */}
+              <ChangePasswordForm />
+            </div>
           </div>
         )}
       </main>

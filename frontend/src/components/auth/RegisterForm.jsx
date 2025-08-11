@@ -17,13 +17,13 @@ const RegisterForm = () => {
             htmlFor="username"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Full Name
+            Username
           </label>
           <Field
             name="username"
             type="text"
             className="input-field"
-            placeholder="Enter your full name"
+            placeholder="Enter your username"
           />
           <ErrorMessage
             name="username"

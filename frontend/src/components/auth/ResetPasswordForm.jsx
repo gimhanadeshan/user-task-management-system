@@ -1,19 +1,42 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ResetPasswordForm = ({ token }) => {
-  const { resetPassword, isLoading, error, setError, setSuccess } = useAuth();
+  const { resetPassword, isLoading, error, setError } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setError(null);
+  }, [setError]);
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      await resetPassword(token, values.newPassword);
-      setSuccess(
-        "Password reset successfully. You can now login with your new password."
-      );
+      console.log("Submitting:", {
+        token: token,
+        newPassword: values.newPassword,
+      });
+
+      const response = await resetPassword(token, values.newPassword);
+
+      console.log("Success response:", response);
+      navigate("/login");
+      alert("Password reset successfully!");
       resetForm();
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to reset password");
+      console.error("Detailed error:", {
+        message: err.message,
+        response: err.response?.data,
+        stack: err.stack,
+      });
+
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to reset password. Please try again."
+      );
     }
   };
 
@@ -30,7 +53,7 @@ const ResetPasswordForm = ({ token }) => {
       })}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, isValid }) => (
         <Form className="space-y-6">
           <div>
             <label
@@ -80,8 +103,8 @@ const ResetPasswordForm = ({ token }) => {
 
           <button
             type="submit"
-            disabled={isLoading || isSubmitting}
-            className="btn-primary"
+            disabled={isLoading || isSubmitting || !isValid}
+            className="btn-primary disabled:opacity-50"
           >
             {isLoading || isSubmitting ? (
               <>Resetting Password...</>

@@ -31,8 +31,32 @@ export const forgotPassword = async (email) => {
 };
 
 export const resetPassword = async (token, newPassword) => {
-  const response = await api.post("/reset-password", { token, newPassword });
-  return response.data;
+  try {
+    console.log("Sending reset request with:", { token, newPassword });
+    const response = await api.post(
+      "/reset-password",
+      {
+        token,
+        newPassword,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Full error details:", {
+      config: error.config,
+      response: {
+        status: error.response?.status,
+        data: error.response?.data,
+        headers: error.response?.headers,
+      },
+    });
+    throw error;
+  }
 };
 
 export const changePassword = async (currentPassword, newPassword) => {
